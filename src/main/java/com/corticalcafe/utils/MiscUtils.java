@@ -11,7 +11,7 @@ import javax.imageio.*;
 
 import java.text.*;
 
-import com.sun.image.codec.jpeg.*;
+//import com.sun.image.codec.jpeg.*;
 
 /**
  * Misc small routines which are useful

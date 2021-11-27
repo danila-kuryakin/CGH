@@ -59,23 +59,36 @@ public class CGHapplicationView extends FrameView {
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
-        int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
-        messageTimer = new Timer(messageTimeout, new ActionListener() {
+        messageTimer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
         });
         messageTimer.setRepeats(false);
-        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
         for (int i = 0; i < busyIcons.length; i++) {
             busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
         }
-        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
+        busyIconTimer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
                 statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
             }
         });
-        idleIcon = resourceMap.getIcon("StatusBar.idleIcon");
+        final Icon idleIcon = new Icon() {
+            @Override
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+
+            }
+
+            @Override
+            public int getIconWidth() {
+                return 0;
+            }
+
+            @Override
+            public int getIconHeight() {
+                return 0;
+            }
+        };
         statusAnimationLabel.setIcon(idleIcon);
 
         // connecting action tasks to status bar via TaskMonitor
@@ -1257,7 +1270,6 @@ public class CGHapplicationView extends FrameView {
 
     private final Timer messageTimer;
     private final Timer busyIconTimer;
-    private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
 
